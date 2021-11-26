@@ -1,0 +1,14 @@
+.homepageContainer{
+    width: 100%;
+    height: calc(100vh - 80px);
+    display: flex;
+    background-color: black;
+}
+.leftContainer{
+    
+    flex: 1;
+}
+.rightContainer{
+   flex: 2;
+   
+}

@@ -1,0 +1,37 @@
+.optionsContainer{
+    height: 100%;
+    width: 100%;
+    display: grid;
+    grid-template-columns: auto auto;
+    justify-content: space-evenly;
+    align-items: center;
+}
+.card{
+    height: 15vw;
+    width: 15vw;
+    color: white;
+    font-size: xx-large;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 2px 2px 10px grey;
+    cursor: pointer;
+    text-shadow: 1px 1px black;
+}
+.card:hover{
+    background-color: grey;
+    text-shadow: 2px 2px 10px black;
+}
+.profileCard{
+    background-color: red;
+}
+.recordCard{
+    background-color: orange;
+}
+.searchCard{
+    background-color: hotpink;
+}
+.aboutCard{
+    background-color: purple;
+}

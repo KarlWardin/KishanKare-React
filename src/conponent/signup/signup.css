@@ -1,0 +1,37 @@
+.signupContainer{
+   height: 100%;
+   width: 100%;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   color: white;
+}
+.signupWrapper{
+   height: 100%;
+   width: 60%;
+   display: flex;
+   flex-direction: column;
+   justify-content: center;
+   align-items: center;
+}
+.signupWrapper input{
+    padding: 10px;
+    font-size: x-large;
+    margin-top: 20px;
+    border-radius: 10px;
+}
+.signupWrapper span{
+    padding: 10px;
+    font-size: x-large;
+    background-color: green;
+    margin-top: 20px;
+    cursor: pointer;
+    border-radius: 10px;
+    text-shadow: 2px 2px black;
+}
+.signupWrapper span:hover{
+    background-color: blue;
+}
+.signupWrapper p{
+    margin-top: 20px;
+}
