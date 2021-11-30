@@ -1,6 +1,10 @@
 import "./options.css"
+import { useContext } from "react"
+import { AuthContext } from "../../Context/AuthContext"
 
 export default function Options() {
+    const user = useContext(AuthContext);
+    
     return (
         <div className="optionsContainer">
             <div className="card profileCard" >profile</div>

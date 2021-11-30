@@ -1,13 +1,16 @@
 import './App.css';
 import Navbar from './conponent/navbar/Navbar';
 import Homepage from './conponent/homepage/Homepage';
+import { AuthContextProvider } from './Context/AuthContext';
 
 function App() {
   return (
-    <div className="App">
-      <Navbar/>
-      <Homepage/>
-    </div>
+    <AuthContextProvider>
+      <div className="App">
+        <Navbar />
+        <Homepage />
+      </div>
+    </AuthContextProvider>
   );
 }
 
