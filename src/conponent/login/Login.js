@@ -1,6 +1,7 @@
 import "./login.css"
 import { useRef } from "react";
 import { Link } from "react-router-dom";
+import axios from "axios";
 
 export default function Login() {
 
@@ -10,13 +11,17 @@ export default function Login() {
     const loginHandler = () => {
         const e = email.current.value;
         const p = password.current.value;
-        if(e==="" || p===""){
+        if (e === "" || p === "") {
             alert("please fill all the fields");
-        }else{
-            const logIn = async()=> {
-
+        } else {
+            const logIn = async () => {
+                const res = await axios.post("", {});
             }
-            logIn();
+            try {
+                logIn();
+            } catch (err) {
+                alert(err);
+            }
         }
     }
 
