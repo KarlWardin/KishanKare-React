@@ -1,12 +1,30 @@
 import "./login.css"
-import { useRef } from "react";
+import { useRef,useContext } from "react";
 import { Link } from "react-router-dom";
-import axios from "axios";
+import { auth } from "../../firebase";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { AuthContext } from "../../Context/AuthContext";
+
 
 export default function Login() {
-
+    //isFetching is for progressBar
+    const { isFetching, dispatch } = useContext(AuthContext);
     const email = useRef();
     const password = useRef();
+
+    const logIn = async (email,password)=> {
+        dispatch({ type: "LOGIN_START" });
+        try{
+            const res = await signInWithEmailAndPassword(auth, email, password);
+            const currentUser = { "uid":res.user.uid, "email":email };
+            console.log(currentUser);
+            dispatch({ type: "LOGIN_SUCCESS", payload: currentUser });
+        }catch(err){
+            console.log(err);
+            alert(err.message);
+            dispatch({ type: "LOGIN_FAILURE", payload: err });
+        }
+      }
 
     const loginHandler = () => {
         const e = email.current.value;
@@ -14,14 +32,7 @@ export default function Login() {
         if (e === "" || p === "") {
             alert("please fill all the fields");
         } else {
-            const logIn = async () => {
-                const res = await axios.post("", {});
-            }
-            try {
-                logIn();
-            } catch (err) {
-                alert(err);
-            }
+            logIn(e,p);
         }
     }
 

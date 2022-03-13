@@ -1,0 +1,25 @@
+.searchContainer{
+    display: grid;
+    width: 100vw;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    min-height: calc(100vh - 80px);;
+    
+    box-sizing: border-box;
+    padding: 5%;
+    row-gap: 10%;
+    column-gap: 10%;
+}
+
+.plantOptions{
+    background-color: aquamarine;
+    border-radius: 10px;
+    border: solid green 10px;
+    text-align: center;
+    font-size: xx-large;
+    color: whitesmoke;
+    text-shadow: 2px 2px black;
+}
+
+.input-btn{
+    display: none;
+}

@@ -1,45 +1,24 @@
 import "./navbar.css";
 import SearchIcon from '@material-ui/icons/Search';
-//import { Link } from "react-router-dom";
+import logo from "../../images/application_logo.png"
+import { useContext } from "react";
+import { AuthContext } from "../../Context/AuthContext"
 
 export default function Navbar() {
+    const { user, dispatch } = useContext(AuthContext);
 
-
-    const handleFilePick = (event) => {
-        const { target } = event;
-        const { files } = target;
-
-        if (files && files[0]) {
-            console.log(files[0]);
-           // var reader = new FileReader();
-
-           // reader.onloadstart = () => this.setState({ loading: true });
-
-           // reader.onload = event => {
-                //this.setState({
-                //    data: event.target.result,
-                //    loading: false
-               // });
-          //  };
-
-           // reader.readAsDataURL(files[0]);
-        }
-    }
+    const logOutHandler = ()=> {
+        dispatch({ type: "LOGIN_FAILURE", payload: "logged out" });    }
 
     return (
         <div className="navContainer">
-            <img src="https://image.flaticon.com/icons/png/128/4284/4284772.png" className="webLogo" alt="logo"></img>
+            <img src={logo} className="webLogo" alt="kisgancre-logo"></img>
             <span className="webName">KishanKare</span>
             <div className="searchbox" >
                 <input className="searchInput"></input>
                 <SearchIcon className="searchIcon" />
             </div>
-            <input
-                type="file"
-                accept="image/*"
-                capture="camera"
-                onChange={handleFilePick}
-            />
+            {user ? <button onClick={logOutHandler}>Log Out</button> :<></>}
         </div>
     )
 }

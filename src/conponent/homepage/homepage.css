@@ -5,10 +5,16 @@
     background-color: black;
 }
 .leftContainer{
-    
+    display: flex;
     flex: 1;
 }
 .rightContainer{
-   flex: 2;
-   
+    display: flex;
+    flex: 2;
+}
+
+@media only screen and (max-width:800px) {
+    .leftContainer{
+        display: none;
+    }
 }
