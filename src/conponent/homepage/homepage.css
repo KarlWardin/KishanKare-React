@@ -1,6 +1,7 @@
 .homepageContainer{
     width: 100%;
     height: calc(100vh - 80px);
+    min-width: 320px;
     display: flex;
     background-color: black;
 }
@@ -13,7 +14,7 @@
     flex: 2;
 }
 
-@media only screen and (max-width:800px) {
+@media only screen and (max-width:900px) {
     .leftContainer{
         display: none;
     }

@@ -17,7 +17,7 @@ export default function Homepage() {
         <Route path="/search">{user!==null ? <Search/> : <Signup/>}</Route>
         <div className="homepageContainer">
             <div className="leftContainer">
-               <img id="side_pic" src={side_pic} alt="side-agriculture-picture"></img>
+               <img id="side_pic" src={side_pic} alt="side-agriculture"></img>
             </div>
             <div className="rightContainer">
                 

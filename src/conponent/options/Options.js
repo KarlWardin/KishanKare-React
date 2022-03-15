@@ -1,20 +1,26 @@
 import "./options.css"
-import { useContext } from "react"
-import { AuthContext } from "../../Context/AuthContext"
 import { Link } from "react-router-dom";
-
+import search_bg from "../../images/search_bg.png"
+import contact_bg from "../../images/contact_bg.png"
+import record_bg from "../../images/agriculture.png"
 
 export default function Options() {
-    const user = useContext(AuthContext);
-    
+
     return (
         <div className="optionsContainer">
-            <div className="card profileCard" >profile</div>
-            <div className="card recordCard" >records</div>
-            <div className="card searchCard" >
-                <Link to="/search" style={{ textDecoration: 'none',color:'white' }} >Search</Link>
-            </div>
-            <div className="card aboutCard" >about</div>
+            <Link title="find a new disease" className="card" to="/search" style={{ backgroundImage: `url(${search_bg})` }} >
+                find a new disease
+            </Link>
+
+            <Link title="previous search results" className="card" to="/search" style={{ backgroundImage: `url(${record_bg})` }} >
+                previous search results
+            </Link>
+
+
+            <a title="Contact us" className="card" href="mailto:sg2240@cse.jgec.ac.in" target={'_blank'} style={{ backgroundImage: `url(${contact_bg})` }} >
+                Contact us
+            </a>
+
         </div>
     )
 }

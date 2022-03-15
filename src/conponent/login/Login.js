@@ -4,10 +4,11 @@ import { Link } from "react-router-dom";
 import { auth } from "../../firebase";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { AuthContext } from "../../Context/AuthContext";
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 
 export default function Login() {
-    //isFetching is for progressBar
+
     const { isFetching, dispatch } = useContext(AuthContext);
     const email = useRef();
     const password = useRef();
@@ -17,10 +18,10 @@ export default function Login() {
         try{
             const res = await signInWithEmailAndPassword(auth, email, password);
             const currentUser = { "uid":res.user.uid, "email":email };
-            console.log(currentUser);
+            //console.log(currentUser);
             dispatch({ type: "LOGIN_SUCCESS", payload: currentUser });
         }catch(err){
-            console.log(err);
+            //console.log(err);
             alert(err.message);
             dispatch({ type: "LOGIN_FAILURE", payload: err });
         }
@@ -41,7 +42,9 @@ export default function Login() {
             <form className="loginWrapper" onSubmit={loginHandler}>
                 <input type="email" placeholder="email" ref={email}></input>
                 <input type="password" placeholder="password" ref={password}></input>
-                <span type="submit" onClick={loginHandler}>Log In</span>
+                {isFetching ? 
+                    <CircularProgress style={{marginTop:"20px"}}/> :
+                       <span type="submit" onClick={loginHandler}>Log In</span>}
                 <p>or</p>
                 <Link to="/signup" >Create an account</Link>
             </form>

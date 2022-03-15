@@ -1,6 +1,7 @@
 .loginContainer{
     height: 100%;
     width: 100%;
+    min-width: 320px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -9,6 +10,7 @@
  .loginWrapper{
     height: 100%;
     width: 60%;
+    min-width: 320px;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -35,4 +37,3 @@
  .loginWrapper p{
      margin-top: 20px;
  }
- 

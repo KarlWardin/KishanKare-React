@@ -4,11 +4,13 @@ import { getDownloadURL, ref as sRef, getStorage, uploadBytesResumable } from "f
 import { getDatabase, ref as dbRef, set } from "firebase/database";
 import { useContext } from "react";
 import { AuthContext } from "../../Context/AuthContext";
+import upload_logo from "../../images/upload_logo.png"
 
 
 export default function Search() {
 
     const [image, setImage] = useState(null);
+    const [ type, setType ] = useState("");
     const { user } = useContext(AuthContext);
 
     const options = [
@@ -16,13 +18,6 @@ export default function Search() {
         { id: "Tomato", api: "/tomato", pic: "tomato.jpg" },
         { id: "rice", api: "/rice", pic: "rice.jpg" }
     ];
-
-    const optionItems = () => {
-        let list = "";
-        options.map(e => list += `<div id=${e.id} style="background-image:${e.pic};" className="plantOptions">${e.id}</div>`);
-        console.log(list);
-        return list;
-    };
 
     const filePathHandler = (e) => {
         if (e.target.files[0]) {
@@ -55,7 +50,7 @@ export default function Search() {
     // UPLOADING FILE PATH TO REALTIME FIRESTORE
     const handlePathUpload = (path) => {
         const db = getDatabase();
-        set(dbRef(db, `test_uploads/${user.uid}` ), {
+        set(dbRef(db, `test_uploads/${user.uid}`), {
             time: new Date(),
             url: path
         });
@@ -63,21 +58,36 @@ export default function Search() {
 
 
     return (
-        <div className="searchContainer">
-            <div className="plantOption">
-                <label htmlFor="input-btn">
-                    <img style={{ "height": "10%", "width": "10%" }} src="https://image.shutterstock.com/image-photo/wooden-bowl-rice-on-ears-260nw-1714464100.jpg"></img>
+        <div className="container">
+
+            <form className="searchContainer">
+                <label htmlFor="input_file">
+                    <img id="upload_img" src={upload_logo} alt="upload the file here"></img>
                 </label>
                 <input
-                    className="input-bt"
-                    id="input-btn"
+                    id="input_file"
                     type="file"
                     accept="image/*"
                     capture="camera"
-                    onChange={filePathHandler}></input>
-                <button onClick={handleImageUpload}>upload</button>
-            </div>
+                    onChange={filePathHandler}>
+                </input>
+                {image ? 
+                     <p style={{color:"green"}}>{image.name}</p> 
+                     : <p style={{color:"red"}}>**please Select an Image</p>
+                }
 
+                <select className="selectInput" onChange={e=>setType(e.target.value)}>
+                    <option value={"rice"}>rice</option>
+                    <option value={"tomato"}>tomato</option>
+                    <option value={"wheat"}>wheat</option>
+                </select>
+
+                <button onClick={handleImageUpload}>Let's find</button>
+            </form>
+
+            <div className="resultContainer">
+                result to be shown here
+            </div>
         </div>
     )
 }
