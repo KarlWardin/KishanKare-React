@@ -1,5 +1,6 @@
 import "./search.css"
 import { useState } from "react"
+import axios from "axios";
 import { getDownloadURL, ref as sRef, getStorage, uploadBytesResumable } from "firebase/storage";
 import { getDatabase, ref as dbRef, set } from "firebase/database";
 import { useContext } from "react";
@@ -7,17 +8,15 @@ import { AuthContext } from "../../Context/AuthContext";
 import upload_logo from "../../images/upload_logo.png"
 
 
+
 export default function Search() {
 
     const [image, setImage] = useState(null);
-    const [ type, setType ] = useState("");
+    const [title, setTitle] = useState("Please Upload an image of diseased plant Leaf");
+    const [description, setDescription] = useState(`Currently Supported plants are:\n 1y`);
+    const [prevent, setPrevent] = useState("");
+    const [imageUrl, setImageUrl] = useState("");
     const { user } = useContext(AuthContext);
-
-    const options = [
-        { id: "rice", api: "/rice", pic: "rice.jpg" },
-        { id: "Tomato", api: "/tomato", pic: "tomato.jpg" },
-        { id: "rice", api: "/rice", pic: "rice.jpg" }
-    ];
 
     const filePathHandler = (e) => {
         if (e.target.files[0]) {
@@ -26,10 +25,28 @@ export default function Search() {
         }
     }
 
+    const getDiseaseInfo = async (downloadURL) => {
+        try {
+            const data = new FormData();
+            data.append('file', image );
+            const res = await axios.post(`http://127.0.0.1:5000/submit`,data);
+            console.log(res);
+            setTitle(res.data.title);
+            setDescription(res.data.description);
+            setPrevent(res.data.prevent);
+            setImageUrl(res.data.image_url);
+        } catch (err) {
+            console.log(err);
+        }
+    }
+
+    /*
     // UPLOADING IMAGE TO FIREBASE
     const handleImageUpload = () => {
         if (image == null) return;
-
+        console.log("uploading to firebase....")
+     
+        try{
         const storage = getStorage();
         const storageRef = sRef(storage, `images/${image.name}`);
 
@@ -41,10 +58,16 @@ export default function Search() {
             () => {                            //successful
                 getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
                     console.log('File available at', downloadURL);
+                    diseaseInfo(downloadURL);
                     handlePathUpload(downloadURL);
                 });
             }
         );
+        }catch(err){
+            console.log(err);
+            setDescription("Something went wrong please try again")
+        }
+        
     }
 
     // UPLOADING FILE PATH TO REALTIME FIRESTORE
@@ -55,6 +78,7 @@ export default function Search() {
             url: path
         });
     }
+    */
 
 
     return (
@@ -71,22 +95,20 @@ export default function Search() {
                     capture="camera"
                     onChange={filePathHandler}>
                 </input>
-                {image ? 
-                     <p style={{color:"green"}}>{image.name}</p> 
-                     : <p style={{color:"red"}}>**please Select an Image</p>
+                {image ?
+                    <p style={{ color: "green" }}>{image.name}</p>
+                    : <p style={{ color: "red" }}>**please Select an Image</p>
                 }
 
-                <select className="selectInput" onChange={e=>setType(e.target.value)}>
-                    <option value={"rice"}>rice</option>
-                    <option value={"tomato"}>tomato</option>
-                    <option value={"wheat"}>wheat</option>
-                </select>
-
-                <button onClick={handleImageUpload}>Let's find</button>
+                <button type="button" onClick={getDiseaseInfo}>Let's find</button>
             </form>
 
             <div className="resultContainer">
-                result to be shown here
+                <img src={imageUrl} alt="" />
+                <h1>{title}</h1>
+                <hr />
+                <p>{description}</p>
+                <p>{prevent}</p>
             </div>
         </div>
     )
