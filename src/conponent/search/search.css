@@ -44,9 +44,17 @@ button{
     width: 50%;
     height: 100%;
     background-color: blueviolet;
+    background-color: rgba(0, 128, 0, 0.398);
     padding: 20px;
     box-sizing: border-box;
     min-width: 320px;
+    overflow: auto;
+    font-weight: bold;
+}
+.plantImage{
+    width: 70%;
+    border-radius: 5px;
+    border: black solid 5px;
 }
 
 @media only screen and ( max-width: 700px) {

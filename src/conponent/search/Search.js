@@ -13,15 +13,16 @@ export default function Search() {
 
     const [image, setImage] = useState(null);
     const [title, setTitle] = useState("Please Upload an image of diseased plant Leaf");
-    const [description, setDescription] = useState(`Currently Supported plants are:\n 1y`);
+    const [description, setDescription] = useState(``);
     const [prevent, setPrevent] = useState("");
     const [imageUrl, setImageUrl] = useState("");
+    const [uploadedImg, setUploadedImg] = useState(upload_logo);
     const { user } = useContext(AuthContext);
 
     const filePathHandler = (e) => {
         if (e.target.files[0]) {
             setImage(e.target.files[0]);
-            console.log(image);
+            //console.log(image);
         }
     }
 
@@ -30,11 +31,12 @@ export default function Search() {
             const data = new FormData();
             data.append('file', image );
             const res = await axios.post(`http://127.0.0.1:5000/submit`,data);
-            console.log(res);
+            //console.log(res);
             setTitle(res.data.title);
             setDescription(res.data.description);
             setPrevent(res.data.prevent);
             setImageUrl(res.data.image_url);
+            //setUploadedImg(image);
         } catch (err) {
             console.log(err);
         }
@@ -86,7 +88,7 @@ export default function Search() {
 
             <form className="searchContainer">
                 <label htmlFor="input_file">
-                    <img id="upload_img" src={upload_logo} alt="upload the file here"></img>
+                    <img id="upload_img" src={uploadedImg} alt="upload the file here"></img>
                 </label>
                 <input
                     id="input_file"
@@ -104,10 +106,13 @@ export default function Search() {
             </form>
 
             <div className="resultContainer">
-                <img src={imageUrl} alt="" />
+                <img className="plantImage" src={imageUrl} alt="" />
                 <h1>{title}</h1>
-                <hr />
+                <hr style={{marginTop: "30px"}} />
+                {description ? <h3 style={{ color: "white" }}>Description of the disease:</h3> : <></>}
                 <p>{description}</p>
+                <hr style={{marginTop: "30px"}}/>
+                {prevent ? <h3 style={{ color: "white" }}>How to prevent the disease?</h3> : <></>}
                 <p>{prevent}</p>
             </div>
         </div>
